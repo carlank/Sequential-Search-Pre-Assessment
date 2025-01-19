@@ -1,0 +1,17 @@
+body {
+    background-color: blanchedalmond;
+}
+body > * {
+    margin: 4px;
+}
+
+header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: bisque;
+}
+
+section {
+    background-color: burlywood;
+}

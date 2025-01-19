@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+    <header>
+        <h1>General Store</h1>
+        <p>Help the storekeeper find items for customers!</p>
+    </header>
+    <main>
+        <section id="score-section">
+            <h2>Score: <span id="score"></span></h2>
+        </section>
+        <section id="inventory-section">
+            <h2>Store Inventory</h2>
+            <ol id="inventory"></ol>
+        </section>
+        <section id="request-section">
+            <h2>Customer Request</h2>
+            <p id="request"></p>
+            <input type="text" id="input" placeholder="What number item do they want?" size="30">
+            <button id="submit" onclick="checkItem()">Check Item</button>
+            <p id="response"></p>
+            <button id="next" onclick="nextCustomer()" hidden>Next Customer</button>
+        </section>
+    </main>
+    <script src="index.js"></script>
+</body>
+</html>
