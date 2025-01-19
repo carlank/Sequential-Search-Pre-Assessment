@@ -60,7 +60,7 @@ const possibleItems = [
     { name: "Lavender Bundle", cost: 15 },
     { name: "Glass Orb", cost: 100 }
 ];
-
+possibleItems.sort((a,b) => a.cost - b.cost)
 
 let request = {};
 
@@ -70,17 +70,17 @@ function randomIndex(arr){
     return Math.floor(Math.random() * arr.length);
 }
 
-function randomElement(arr){
-    return arr.at(randomIndex(arr));
+function randomElement(arr, max = 1e6){
+    return arr.at(randomIndex(arr) % max);
 }
 
 function refreshStock(){
-    inventory = Array(inventorySize).fill(0).map(() => randomElement(possibleItems))
+    inventory = Array(inventorySize).fill(0).map(() => randomElement(possibleItems, inventorySize))
 }
 
 function refreshRequest(){
-    const options = ["item", "min", "lt", "sum"]
-    let item;
+    const options = ["item", "min", "gt", "lt", "sum"]
+    let item, min, max, cost;
     switch (randomElement(options)){
         case "item":
             item = randomElement(inventory)
@@ -96,12 +96,24 @@ function refreshRequest(){
                 text: `Find the least expensive item you have (If there's a tie, find the first one!)`
             }
             break;
+        case "gt":
+            min = inventory.reduce((acc,cur) => acc < cur.cost ? acc : cur.cost, 0)
+            max = inventory.reduce((acc,cur) => acc > cur.cost ? acc : cur.cost, 0)
+            cost = Math.floor(Math.random() * (max - min) + min);
+            item = inventory.find(item => item.cost >= cost)
+            request = {
+                answer: inventory.findIndex(i => i===item)+1,
+                text: `Find the first item MORE than ${cost} gold`
+            }
+            break;
         case "lt":
-            const cost = Math.floor(Math.random() * 1000);
+            min = inventory.reduce((acc,cur) => acc < cur.cost ? acc : cur.cost, 0)
+            max = inventory.reduce((acc,cur) => acc > cur.cost ? acc : cur.cost, 0)
+            cost = Math.floor(Math.random() * (max - min) + min);
             item = inventory.find(item => item.cost <= cost)
             request = {
                 answer: inventory.findIndex(i => i===item)+1,
-                text: `Find the first item less than ${cost} gold`
+                text: `Find the first item LESS than ${cost} gold`
             }
             break;
         case "sum":
